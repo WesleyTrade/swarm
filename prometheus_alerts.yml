@@ -1,0 +1,33 @@
+groups:
+  - name: KafkaAlerts
+    rules:
+      - alert: KafkaMessageDelay
+        expr: kafka_server_broker_topic_metrics_request_latency_ms > 500
+        for: 2m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Kafka message delay detected"
+          description: "Message delay is greater than 500ms for more than 2 minutes"
+        
+  - name: RedisAlerts
+    rules:
+      - alert: RedisMemoryUsageHigh
+        expr: redis_memory_used_bytes > 500000000
+        for: 5m
+        labels:
+          severity: critical
+        annotations:
+          summary: "High Redis memory usage"
+          description: "Redis memory usage has exceeded 500MB for more than 5 minutes."
+        
+  - name: InfluxDBAlerts
+    rules:
+      - alert: InfluxDBQueryLatencyHigh
+        expr: influxdb_query_duration_seconds > 2
+        for: 3m
+        labels:
+          severity: warning
+        annotations:
+          summary: "InfluxDB query latency high"
+          description: "InfluxDB query latency has exceeded 2 seconds for more than 3 minutes."
